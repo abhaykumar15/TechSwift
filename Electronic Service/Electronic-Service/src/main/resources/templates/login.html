@@ -1,26 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>TechSwift | Login</title>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
+
 <body>
-<h2>Login</h2>
+<div class="wrapper">
+    <h1>Hello!</h1>
+    <p>Welcome to TechSwift</p>
 
-<p th:if="${param.error}" style="color:red;">Invalid credentials!</p>
-<p th:if="${param.logout}" style="color:green;">You have been logged out.</p>
-<p th:if="${param.registered}" style="color:green;">Registration successful! Please log in.</p>
+    <!-- Thymeleaf form binding -->
+    <form th:action="@{/login}" th:object="${loginForm}" method="post">
+        <input type="text" th:field="*{mobile}" placeholder="Enter your Mobile Number" required>
+        <input type="password" th:field="*{password}" placeholder="Password" required>
 
-<form th:action="@{/login}" method="post">
-    <label>Email:</label>
-    <input type="text" name="username" required><br>
+        <p class="recover">
+            <a th:href="@{/forgot}">Forgot Password?</a>
+        </p>
 
-    <label>Password:</label>
-    <input type="password" name="password" required><br>
+        <button type="submit">Sign in</button>
 
-    <button type="submit">Login</button>
-</form>
+        <!-- Error message (conditionally shown) -->
+        <p th:if="${error}" th:text="${error}"
+           style="color:red; font-size:0.9rem; margin-top:10px;"></p>
+    </form>
 
-<p>Don’t have an account? <a th:href="@{/register}">Register</a></p>
+    <p class="or">----- or continue with -----</p>
+
+    <div class="icons">
+        <i class="fab fa-google"></i>
+        <i class="fab fa-github"></i>
+        <i class="fab fa-facebook"></i>
+    </div>
+
+    <div class="not-member">
+        Not a member? <a th:href="@{/signup}"><b>Register Now</b></a>
+    </div>
+</div>
 </body>
 </html>
