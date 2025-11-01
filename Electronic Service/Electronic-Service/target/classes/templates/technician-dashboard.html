@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Technician Dashboard</title></head>
+<body>
+<h2>Technician Dashboard</h2>
+<table border="1">
+  <tr><th>ID</th><th>Customer</th><th>Device</th><th>Issue</th><th>Status</th><th>Update</th></tr>
+  <tr th:each="b : ${assignedBookings}">
+    <td th:text="${b.id}"></td>
+    <td th:text="${b.customer.name}"></td>
+    <td th:text="${b.deviceDetails}"></td>
+    <td th:text="${b.issueDescription}"></td>
+    <td th:text="${b.status}"></td>
+    <td>
+      <form th:action="@{/technician/update-status/{id}(id=${b.id})}" method="post">
+        <select name="status">
+          <option>In Progress</option>
+          <option>Completed</option>
+        </select>
+        <button type="submit">Update</button>
+      </form>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

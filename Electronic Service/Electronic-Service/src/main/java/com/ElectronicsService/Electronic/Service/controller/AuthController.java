@@ -2,12 +2,15 @@ package com.ElectronicsService.Electronic.Service.controller;
 
 import com.ElectronicsService.Electronic.Service.model.User;
 import com.ElectronicsService.Electronic.Service.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class AuthController {
@@ -15,11 +18,9 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String home() {
-        return "redirect:/login";
-    }
-
+    /*@Autowired
+    private PasswordEncoder passwordEncoder;
+*/
     @GetMapping("/login")
     public String loginPage() {
         return "login";
@@ -33,25 +34,23 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") @Valid User user, Model model) {
+        // Check if email already exists
         if (userService.emailExists(user.getEmail())) {
             model.addAttribute("error", "Email already exists!");
             return "register";
         }
 
-        userService.saveUser(user);
-        return "redirect:/login";
-    }
+        // Encode password before saving
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-    @GetMapping("/dashboard")
-    public String dashboardRedirect(Authentication auth) {
-        String role = auth.getAuthorities().iterator().next().getAuthority();
-        switch (role) {
-            case "ROLE_ADMIN":
-                return "redirect:/admin/dashboard";
-            case "ROLE_TECHNICIAN":
-                return "redirect:/technician/dashboard";
-            default:
-                return "redirect:/customer/dashboard";
-        }
+        // Default role for new users → CUSTOMER
+        user.setRole("ROLE_CUSTOMER");
+
+        // Save user in database
+        userService.saveUser(user);
+
+        // Redirect with success message to login
+        model.addAttribute("success", "Registration successful! Please log in.");
+        return "redirect:/login?registered";
     }
 }

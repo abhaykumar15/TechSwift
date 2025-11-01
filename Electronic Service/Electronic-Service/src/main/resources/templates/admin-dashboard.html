@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Admin Dashboard</title></head>
+<body>
+<h2>Admin Dashboard</h2>
+<h3>Bookings</h3>
+<table border="1">
+  <tr><th>ID</th><th>Customer</th><th>Service</th><th>Status</th><th>Assign</th></tr>
+  <tr th:each="b : ${bookings}">
+    <td th:text="${b.id}"></td>
+    <td th:text="${b.customer.name}"></td>
+    <td th:text="${b.serviceCategory.serviceName}"></td>
+    <td th:text="${b.status}"></td>
+    <td>
+      <form th:action="@{/admin/assign/{bid}/{tid}(bid=${b.id}, tid=${technicians[0].id})}" method="get">
+        <select>
+          <option th:each="t : ${technicians}" th:value="${t.id}" th:text="${t.name}"></option>
+        </select>
+        <button type="submit">Assign</button>
+      </form>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

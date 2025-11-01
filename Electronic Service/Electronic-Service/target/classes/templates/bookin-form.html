@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Book Service</title></head>
+<body>
+<h2>Book Service</h2>
+<form th:action="@{/customer/book}" th:object="${booking}" method="post">
+  <input type="hidden" th:field="*{serviceCategory.id}" />
+  <label>Device Details:</label><br>
+  <input type="text" th:field="*{deviceDetails}" /><br><br>
+  <label>Issue Description:</label><br>
+  <textarea th:field="*{issueDescription}"></textarea><br><br>
+  <button type="submit">Submit</button>
+</form>
+</body>
+</html>

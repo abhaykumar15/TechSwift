@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Customer Dashboard</title></head>
+<body>
+<h2>Welcome, Customer!</h2>
+<h3>Available Services</h3>
+<table border="1">
+  <tr><th>Name</th><th>Description</th><th>Action</th></tr>
+  <tr th:each="s : ${services}">
+    <td th:text="${s.serviceName}"></td>
+    <td th:text="${s.description}"></td>
+    <td><a th:href="@{/customer/book/{id}(id=${s.id})}">Book</a></td>
+  </tr>
+</table>
+</body>
+</html>

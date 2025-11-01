@@ -3,28 +3,41 @@ package com.ElectronicsService.Electronic.Service.service;
 import com.ElectronicsService.Electronic.Service.model.User;
 import com.ElectronicsService.Electronic.Service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository repo;
+    private UserRepository userRepository;
 
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public void saveUser(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        if (user.getRole() == null) user.setRole("ROLE_CUSTOMER");
-        repo.save(user);
-    }
-
+    /**
+     * Checks if a user with the given email already exists.
+     * @param email The user's email to check.
+     * @return true if email already exists, otherwise false.
+     */
     public boolean emailExists(String email) {
-        return repo.findByEmail(email).isPresent();
+        return userRepository.findByEmail(email).isPresent();
     }
 
-    public User getByEmail(String email) {
-        return repo.findByEmail(email).orElse(null);
+    /**
+     * Saves a new user after encoding the password.
+     * Assigns a default role (ROLE_CUSTOMER) if not provided.
+     * @param user The user to be saved.
+     */
+    public void saveUser(User user) {
+        // Encrypt password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // Ensure role is not null
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            user.setRole("ROLE_CUSTOMER");
+        }
+
+        userRepository.save(user);
     }
 }
