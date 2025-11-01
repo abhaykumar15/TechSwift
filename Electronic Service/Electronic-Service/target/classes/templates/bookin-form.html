@@ -1,15 +1,135 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Book Service</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Book Service | TechSwift</title>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f5f6fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #f8fafc;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      color: #1e293b;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #1e293b;
+    }
+
+    .navbar a {
+      color: #1e293b;
+      text-decoration: none;
+      font-weight: bold;
+      background-color: #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+
+    .navbar a:hover {
+      background-color: #cbd5e1;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 60px auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 40px 50px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #273c75;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #2f3640;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #dcdde1;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #273c75;
+    }
+
+    textarea {
+      height: 100px;
+      resize: none;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background-color: #44bd32;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #4cd137;
+    }
+  </style>
+</head>
+
 <body>
-<h2>Book Service</h2>
-<form th:action="@{/customer/book}" th:object="${booking}" method="post">
-  <input type="hidden" th:field="*{serviceCategory.id}" />
-  <label>Device Details:</label><br>
-  <input type="text" th:field="*{deviceDetails}" /><br><br>
-  <label>Issue Description:</label><br>
-  <textarea th:field="*{issueDescription}"></textarea><br><br>
-  <button type="submit">Submit</button>
-</form>
+<div class="navbar">
+  <h2>TechSwift - Book Service</h2>
+  <a th:href="@{/customer/dashboard}">Back to Dashboard</a>
+</div>
+
+<div class="container">
+  <h2 th:text="'Book ' + ${service.serviceName}"></h2>
+
+  <form th:action="@{/customer/book}" th:object="${booking}" method="post">
+    <input type="hidden" name="serviceCategoryId" th:value="${service.id}" />
+
+    <label>Device Details:</label>
+    <input type="text" th:field="*{deviceDetails}" placeholder="e.g. iPhone 14 Pro / Dell XPS 15" required />
+
+    <label>Issue Description:</label>
+    <textarea th:field="*{issueDescription}" placeholder="Describe the problem briefly..." required></textarea>
+
+    <button type="submit" class="btn">Submit Booking</button>
+  </form>
+</div>
 </body>
 </html>

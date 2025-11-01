@@ -40,6 +40,18 @@ public class BookingService {
         return repo.findByStatus("Assigned");
     }
 
+    @Autowired
+    private UserRepository userRepository;
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public List<Booking> getAllBookingsByCustomer(User user) {
+        return repo.findByCustomer(user);
+    }
+
+
     public void updateStatus(Long id, String status) {
         Booking b = repo.findById(id).orElse(null);
         if (b != null) {

@@ -1,47 +1,131 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>TechSwift | Login</title>
-    <!-- Link to CSS -->
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <title>TechSwift Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <style>
+        body {
+          font-family: 'Segoe UI', Tahoma, sans-serif;
+          background-color: #f5f6fa;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+        }
+
+        .login-container {
+          background-color: #ffffff;
+          padding: 40px 50px;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          width: 380px;
+          text-align: center;
+        }
+
+        .brand {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #273c75;
+          margin-bottom: 20px;
+          letter-spacing: 0.5px;
+        }
+
+        h2 {
+          color: #2f3640;
+          margin-bottom: 10px;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          margin-top: 15px;
+        }
+
+        label {
+          text-align: left;
+          color: #353b48;
+          font-weight: 600;
+          font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+          padding: 10px 12px;
+          border: 1px solid #dcdde1;
+          border-radius: 5px;
+          font-size: 0.95rem;
+          transition: 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+          border-color: #273c75;
+          outline: none;
+          box-shadow: 0 0 4px rgba(39, 60, 117, 0.3);
+        }
+
+        button {
+          background-color: #273c75;
+          color: white;
+          border: none;
+          padding: 10px;
+          border-radius: 5px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 0.2s ease;
+        }
+
+        button:hover {
+          background-color: #40739e;
+        }
+
+        .link {
+          margin-top: 15px;
+          font-size: 0.9rem;
+        }
+
+        .link a {
+          color: #273c75;
+          text-decoration: none;
+          font-weight: 600;
+        }
+
+        .link a:hover {
+          text-decoration: underline;
+        }
+
+        .message {
+          color: red;
+          font-size: 0.9rem;
+        }
+
+    </style>
 </head>
-
 <body>
-<div class="wrapper">
-    <h1>Hello!</h1>
-    <p>Welcome to TechSwift</p>
+<div class="login-container">
+    <div class="brand">TechSwift</div>
+    <h2>Login to your account</h2>
 
-    <!-- Thymeleaf form binding -->
-    <form th:action="@{/login}" th:object="${loginForm}" method="post">
-        <input type="text" th:field="*{mobile}" placeholder="Enter your Mobile Number" required>
-        <input type="password" th:field="*{password}" placeholder="Password" required>
+    <p th:if="${param.error}" class="message">Invalid credentials. Please try again.</p>
+    <p th:if="${param.logout}" class="message" style="color:green;">You have been logged out successfully.</p>
+    <p th:if="${param.registered}" class="message" style="color:green;">Registration successful! Please log in.</p>
 
-        <p class="recover">
-            <a th:href="@{/forgot}">Forgot Password?</a>
-        </p>
+    <form th:action="@{/login}" method="post">
+        <label>Email:</label>
+        <input type="text" name="username" placeholder="Enter your email" required>
 
-        <button type="submit">Sign in</button>
+        <label>Password:</label>
+        <input type="password" name="password" placeholder="Enter your password" required>
 
-        <!-- Error message (conditionally shown) -->
-        <p th:if="${error}" th:text="${error}"
-           style="color:red; font-size:0.9rem; margin-top:10px;"></p>
+        <button type="submit">Login</button>
     </form>
 
-    <p class="or">----- or continue with -----</p>
-
-    <div class="icons">
-        <i class="fab fa-google"></i>
-        <i class="fab fa-github"></i>
-        <i class="fab fa-facebook"></i>
-    </div>
-
-    <div class="not-member">
-        Not a member? <a th:href="@{/signup}"><b>Register Now</b></a>
+    <div class="link">
+        Don’t have an account? <a th:href="@{/register}">Register here</a>
     </div>
 </div>
 </body>
