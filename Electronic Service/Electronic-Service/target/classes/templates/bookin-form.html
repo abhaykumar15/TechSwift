@@ -3,85 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <title>Book Service | TechSwift</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #f5f6fa;
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
     }
 
-    .navbar {
-      background-color: #f8fafc;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      color: #1e293b;
-      padding: 15px 25px;
+    body {
+      background-color: #0d3055;
+      color: white;
+    }
+
+    /* Header/Navbar */
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background-color: #00172f;
+      padding: 25px 50px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }
 
-    .navbar h2 {
-      margin: 0;
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #1e293b;
+    header h2 {
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 600;
     }
 
-    .navbar a {
-      color: #1e293b;
+    header a {
+      color: #ffc300;
       text-decoration: none;
       font-weight: bold;
-      background-color: #e2e8f0;
+      border: 1px solid #ffc300;
       padding: 6px 12px;
       border-radius: 6px;
-      transition: background-color 0.3s;
+      transition: 0.3s;
+      cursor: pointer;
     }
 
-    .navbar a:hover {
-      background-color: #cbd5e1;
+    header a:hover {
+      background-color: #ffc300;
+      color: #001d3d;
     }
 
+    /* Container */
     .container {
       max-width: 600px;
-      margin: 60px auto;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 80px auto;
+      background: #003566;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       padding: 40px 50px;
     }
 
     h2 {
       text-align: center;
-      color: #273c75;
+      color: #ffd60a;
       margin-bottom: 30px;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
     }
 
     label {
       font-weight: bold;
-      color: #2f3640;
+      color: #ffd60a;
       display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
+      margin-top: 20px;
+      margin-bottom: 6px;
     }
 
     input[type="text"],
     textarea {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #dcdde1;
+      padding: 12px;
+      border: none;
       border-radius: 6px;
       font-size: 1rem;
       box-sizing: border-box;
-      transition: border-color 0.3s;
+      background-color: #002b5c;
+      color: #ffffff;
+      transition: 0.3s;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #b0b0b0;
     }
 
     input[type="text"]:focus,
     textarea:focus {
-      outline: none;
-      border-color: #273c75;
+      outline: 2px solid #ffc300;
     }
 
     textarea {
@@ -92,30 +112,49 @@
     .btn {
       display: block;
       width: 100%;
-      background-color: #44bd32;
-      color: white;
-      font-size: 1rem;
-      font-weight: bold;
+      background-color: #ffc300;
+      color: #001d3d;
+      font-size: 1.1rem;
+      font-weight: 700;
       padding: 12px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 25px;
-      transition: background-color 0.3s;
+      margin-top: 30px;
+      transition: 0.3s;
     }
 
     .btn:hover {
-      background-color: #4cd137;
+      background-color: #ffd60a;
     }
+
+    /* Footer */
+    footer {
+      background-color: #001d3d;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      margin-top: 80px;
+      border-top: 2px solid #ffc300;
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      opacity: 0.85;
+    }
+
   </style>
 </head>
 
 <body>
-<div class="navbar">
+
+<!-- Header -->
+<header>
   <h2>TechSwift - Book Service</h2>
   <a th:href="@{/customer/dashboard}">Back to Dashboard</a>
-</div>
+</header>
 
+<!-- Booking Form -->
 <div class="container">
   <h2 th:text="'Book ' + ${service.serviceName}"></h2>
 
@@ -131,5 +170,11 @@
     <button type="submit" class="btn">Submit Booking</button>
   </form>
 </div>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 TechSwift. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>

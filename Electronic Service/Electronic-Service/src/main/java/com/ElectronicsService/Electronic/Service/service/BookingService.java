@@ -47,6 +47,8 @@ public class BookingService {
         return userRepository.findByEmail(email).orElse(null);
     }
 
+
+
     public List<Booking> getAllBookingsByCustomer(User user) {
         return repo.findByCustomer(user);
     }

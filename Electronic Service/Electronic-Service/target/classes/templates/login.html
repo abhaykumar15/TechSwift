@@ -2,52 +2,97 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>TechSwift Login</title>
+    <title>TechSwift | Login</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Montserrat', sans-serif;
+        }
+
         body {
-          font-family: 'Segoe UI', Tahoma, sans-serif;
-          background-color: #f5f6fa;
+          background-color: #0d3055;
+          color: white;
           display: flex;
+          flex-direction: column;
           justify-content: center;
           align-items: center;
-          height: 100vh;
-          margin: 0;
+          min-height: 100vh;
+        }
+
+        header {
+          background-color: #00172f;
+          padding: 25px 50px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+          position: fixed;
+          top: 0;
+          left: 0;
+        }
+
+        header h2 {
+          color: #ffd60a;
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+
+        header a {
+          color: #ffc300;
+          text-decoration: none;
+          border: 1px solid #ffc300;
+          padding: 8px 14px;
+          border-radius: 6px;
+          font-weight: 600;
+          transition: 0.3s;
+        }
+
+        header a:hover {
+          background-color: #ffc300;
+          color: #001d3d;
         }
 
         .login-container {
-          background-color: #ffffff;
-          padding: 40px 50px;
-          border-radius: 10px;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          background-color: #001d3d;
+          padding: 50px;
+          border-radius: 12px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.5);
           width: 380px;
           text-align: center;
+          margin-top: 120px;
         }
 
         .brand {
           font-size: 1.8rem;
           font-weight: 700;
-          color: #273c75;
-          margin-bottom: 20px;
-          letter-spacing: 0.5px;
+          color: #ffd60a;
+          margin-bottom: 10px;
+          letter-spacing: 1px;
         }
 
         h2 {
-          color: #2f3640;
-          margin-bottom: 10px;
+          color: #ffffff;
+          margin-bottom: 25px;
+          font-weight: 600;
         }
 
         form {
           display: flex;
           flex-direction: column;
           gap: 15px;
-          margin-top: 15px;
         }
 
         label {
           text-align: left;
-          color: #353b48;
+          color: #ffd60a;
           font-weight: 600;
           font-size: 0.95rem;
         }
@@ -55,32 +100,93 @@
         input[type="text"],
         input[type="password"] {
           padding: 10px 12px;
-          border: 1px solid #dcdde1;
-          border-radius: 5px;
-          font-size: 0.95rem;
-          transition: 0.2s ease;
+          border: none;
+          border-radius: 6px;
+          font-size: 1rem;
+          background-color: #003566;
+          color: white;
+          transition: 0.3s;
         }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-          border-color: #273c75;
-          outline: none;
-          box-shadow: 0 0 4px rgba(39, 60, 117, 0.3);
+        input:focus {
+          outline: 2px solid #ffc300;
+          background-color: #002b5c;
         }
 
         button {
-          background-color: #273c75;
-          color: white;
+          background-color: #ffc300;
+          color: #001d3d;
           border: none;
           padding: 10px;
-          border-radius: 5px;
-          font-weight: 600;
+          border-radius: 6px;
+          font-weight: 700;
           cursor: pointer;
-          transition: 0.2s ease;
+          transition: 0.3s;
         }
 
         button:hover {
-          background-color: #40739e;
+          background-color: #ffd60a;
+          color: #000814;
+        }
+
+        .message {
+          color: #ff4d4d;
+          font-size: 0.9rem;
+          margin-top: -5px;
+          margin-bottom: 10px;
+        }
+
+        .message.green {
+          color: #3ac569;
+        }
+
+        .google-section {
+          margin-top: 25px;
+          text-align: center;
+        }
+
+        .google-section img {
+          width: 50px;
+          height: 50px;
+          margin-bottom: 8px;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+
+        .google-section img:hover {
+          transform: scale(1.05);
+        }
+
+        .google-section p {
+          font-weight: 600;
+          color: #ffc300;
+          font-size: 0.95rem;
+          margin: 0;
+        }
+
+        .or-divider {
+          margin: 20px 0;
+          color: #ccc;
+          font-size: 0.9rem;
+          position: relative;
+        }
+
+        .or-divider::before,
+        .or-divider::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          width: 40%;
+          height: 1px;
+          background: #555;
+        }
+
+        .or-divider::before {
+          left: 0;
+        }
+
+        .or-divider::after {
+          right: 0;
         }
 
         .link {
@@ -89,30 +195,58 @@
         }
 
         .link a {
-          color: #273c75;
+          color: #ffd60a;
           text-decoration: none;
           font-weight: 600;
         }
 
         .link a:hover {
-          text-decoration: underline;
+          color: #ffc300;
         }
 
-        .message {
-          color: red;
+        footer {
+          background-color: #001d3d;
+          color: white;
+          padding: 40px 20px;
+          border-top: 2px solid #ffc300;
+          text-align: center;
           font-size: 0.9rem;
+          margin-top: 40px;
+          width: 100%;
+        }
+
+        .footer-social a {
+          color: white;
+          margin: 0 10px;
+          font-size: 1.2rem;
+          transition: 0.3s;
+        }
+
+        .footer-social a:hover {
+          color: #ffc300;
+        }
+
+        .footer-bottom {
+          margin-top: 20px;
+          opacity: 0.8;
         }
 
     </style>
 </head>
 <body>
+
+<header>
+    <h2>TechSwift</h2>
+    <a th:href="@{/register}">Register</a>
+</header>
+
 <div class="login-container">
     <div class="brand">TechSwift</div>
     <h2>Login to your account</h2>
 
     <p th:if="${param.error}" class="message">Invalid credentials. Please try again.</p>
-    <p th:if="${param.logout}" class="message" style="color:green;">You have been logged out successfully.</p>
-    <p th:if="${param.registered}" class="message" style="color:green;">Registration successful! Please log in.</p>
+    <p th:if="${param.logout}" class="message green">You have been logged out successfully.</p>
+    <p th:if="${param.registered}" class="message green">Registration successful! Please log in.</p>
 
     <form th:action="@{/login}" method="post">
         <label>Email:</label>
@@ -124,9 +258,30 @@
         <button type="submit">Login</button>
     </form>
 
+    <div class="or-divider">OR</div>
+
+    <!-- Google Logo Centered + Text Beneath -->
+    <div class="google-section" onclick="window.location.href='/oauth2/authorization/google'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
+        <p>Continue with Google</p>
+    </div>
+
     <div class="link">
         Don’t have an account? <a th:href="@{/register}">Register here</a>
     </div>
 </div>
+
+<footer>
+    <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 TechSwift. All Rights Reserved.</p>
+    </div>
+</footer>
+
 </body>
 </html>

@@ -67,4 +67,5 @@ public class CustomerController {
         model.addAttribute("bookings", bookingService.getAllBookings());
         return "customer-bookings";
     }
+
 }

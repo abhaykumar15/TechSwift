@@ -1,25 +1,407 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Admin Dashboard</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>TechSwift | Admin Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-color: #0a2647;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #00172f, #003566);
+      padding: 25px 50px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    header h2 {
+      color: #ffd60a;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    header a {
+      color: #ffc300;
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid #ffc300;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    header a:hover {
+      background-color: #ffc300;
+      color: #001d3d;
+    }
+
+    /* Hero Section (Glass Style) */
+    .hero {
+      background: url('/images/admin-bg.jpg') center/cover no-repeat, linear-gradient(135deg, #000814, #001d3d);
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 13, 26, 0.6);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+
+    .hero-content h1 {
+      color: #ffd60a;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .hero-content p {
+      color: #e0e0e0;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    /* Stats Section */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 60px auto;
+      max-width: 1100px;
+      padding: 0 20px;
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, #003566, #001d3d);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .stat-card i {
+      font-size: 2.2rem;
+      color: #ffd60a;
+      margin-bottom: 10px;
+    }
+
+    .stat-card h3 {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .stat-card p {
+      color: #ffc300;
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+
+    /* Table Section */
+    section.table-section {
+      margin: 40px auto;
+      max-width: 1100px;
+      padding: 0 20px;
+    }
+
+    section.table-section h2 {
+      color: #ffd60a;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 1.7rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #003566;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+    }
+
+    th, td {
+      padding: 14px;
+      text-align: center;
+      color: white;
+      border-bottom: 1px solid #002b5c;
+    }
+
+    th {
+      background-color: #001d3d;
+      color: #ffd60a;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    tr:hover {
+      background-color: #002b5c;
+      transition: background-color 0.3s;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #001d3d;
+      color: white;
+      padding: 60px 20px 30px;
+      text-align: left;
+      border-top: 2px solid #ffc300;
+      margin-top: 80px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo h3 {
+      color: #ffd60a;
+      font-size: 1.5rem;
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 1.3rem;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #ffc300;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      border-top: 1px solid #003566;
+      padding-top: 20px;
+    }
+
+  </style>
+</head>
 <body>
-<h2>Admin Dashboard</h2>
-<h3>Bookings</h3>
-<table border="1">
-  <tr><th>ID</th><th>Customer</th><th>Service</th><th>Status</th><th>Assign</th></tr>
-  <tr th:each="b : ${bookings}">
-    <td th:text="${b.id}"></td>
-    <td th:text="${b.customer.name}"></td>
-    <td th:text="${b.serviceCategory.serviceName}"></td>
-    <td th:text="${b.status}"></td>
-    <td>
-      <form th:action="@{/admin/assign/{bid}/{tid}(bid=${b.id}, tid=${technicians[0].id})}" method="get">
-        <select>
-          <option th:each="t : ${technicians}" th:value="${t.id}" th:text="${t.name}"></option>
-        </select>
-        <button type="submit">Assign</button>
-      </form>
-    </td>
-  </tr>
-</table>
+
+<header>
+  <h2>TechSwift - Admin Dashboard</h2>
+  <a th:href="@{/logout}">Logout</a>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Welcome, Admin</h1>
+    <p>Manage users, technicians, bookings, and services — all in one powerful control center.</p>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+  <div class="stat-card">
+    <i class="fas fa-users"></i>
+    <h3>Total Customers</h3>
+    <p th:text="${customerCount}">120</p>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-user-cog"></i>
+    <h3>Technicians</h3>
+    <p th:text="${technicianCount}">25</p>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-briefcase"></i>
+    <h3>Total Bookings</h3>
+    <p th:text="${bookingCount}">340</p>
+  </div>
+  <div class="stat-card">
+    <i class="fas fa-wallet"></i>
+    <h3>Total Revenue</h3>
+    <p>₹1,20,000</p>
+  </div>
+</section>
+
+<!-- Table Section -->
+<section class="table-section">
+  <h2>Bookings</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Customer</th>
+      <th>Service</th>
+      <th>Technician</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+    <tr th:each="b : ${bookings}">
+      <td th:text="${b.id}">1</td>
+
+      <!-- customer might be null guard -->
+      <td th:text="${b.customer != null ? b.customer.name : '—'}">Customer</td>
+
+      <td th:text="${b.serviceCategory != null ? b.serviceCategory.serviceName : '—'}">Service</td>
+
+      <td th:text="${b.technician != null ? b.technician.name : 'Not Assigned'}">Technician</td>
+
+      <td th:text="${b.status}">Pending</td>
+
+      <!-- Use bookingDate (LocalDateTime) and #temporals; guard against null -->
+      <td th:text="${b.bookingDate != null ? #temporals.format(b.bookingDate, 'dd-MM-yyyy HH:mm') : 'Not set'}">
+        02-11-2025 09:26
+      </td>
+    </tr>
+
+  </table>
+</section>
+
+<!--Customers-->
+<!-- Customers -->
+<section class="table-section">
+  <h2>Customers</h2>
+
+  <!-- Primary: render when controller provides a 'customers' list -->
+  <table th:if="${users != null}">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Customer</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Total Bookings</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${users}">
+      <td th:text="${c.id}">1</td>
+      <td th:text="${c.name}">Name</td>
+      <td th:text="${c.email}">email@example.com</td>
+      <td th:text="${c.role}">ROLE_CUSTOMER</td>
+
+      <!-- Uses BookingService bean to get booking count.
+           Make sure BookingService has method: countBookingsByCustomerId(Long id) -->
+      <td th:text="${@bookingService.countBookingsByCustomerId(c.id)}">0</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Fallback: if 'customers' not present, build simple list from bookings -->
+  <div th:if="${customers == null}">
+    <p style="margin-bottom:12px; opacity:0.9;">
+      Showing customers derived from bookings (fallback; may contain duplicates).
+    </p>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Latest Booking</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- iterate over bookings and show customer info; duplicates possible -->
+      <tr th:each="b : ${bookings}">
+        <td th:text="${b.customer != null ? b.customer.id : '—'}">1</td>
+        <td th:text="${b.customer != null ? b.customer.name : '—'}">Name</td>
+        <td th:text="${b.customer != null ? b.customer.email : '—'}">email@example.com</td>
+        <td th:text="${b.customer != null ? b.customer.role : '—'}">ROLE_CUSTOMER</td>
+        <td th:text="${b.bookingDate != null ? #temporals.format(b.bookingDate, 'dd-MM-yyyy HH:mm') : '—'}">
+          02-11-2025 09:26
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img src="/images/logo.png" alt="TechSwift Logo">
+      <h3>TechSwift</h3>
+      <p>Smart solutions. Smooth management.</p>
+    </div>
+
+
+
+    <div>
+      <h4>Contact</h4>
+      <p>Email: support@techswift.com</p>
+      <p>Phone: +91 98765 43210</p>
+    </div>
+
+    <div>
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 TechSwift Admin. All Rights Reserved.</p>
+  </div>
+</footer>
+
 </body>
 </html>

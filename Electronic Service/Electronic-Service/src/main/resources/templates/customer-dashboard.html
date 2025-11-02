@@ -338,133 +338,133 @@
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <h2>TechSwift - Customer Dashboard</h2>
-    <a th:href="@{/logout}">Logout</a>
-  </header>
+<!-- Header -->
+<header>
+  <h2>TechSwift - Customer Dashboard</h2>
+  <a th:href="@{/logout}">Logout</a>
+</header>
 
-  <main>
+<main>
 
-    <!-- Hero Section -->
-    <section class="hero">
-      <h1>Welcome to TechSwift</h1>
-      <p>Your one-stop solution for all tech repair services!</p>
-      <a th:href="@{/customer/book-service}" class="btn">Book a Service</a>
-    </section>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to TechSwift</h1>
+    <p>Your one-stop solution for all tech repair services!</p>
 
-    <!-- Slider Section -->
-    <section id="slider">
-      <h2>Our Popular Services</h2>
-      <div class="slider">
-        <div class="slider-track">
-          <div class="slide-card">
-            <h3>Smartphone Repair</h3>
-            <p>Fast screen and battery replacements.</p>
-          </div>
-          <div class="slide-card">
-            <h3>Laptop Repair</h3>
-            <p>Software & hardware fixes by experts.</p>
-          </div>
-          <div class="slide-card">
-            <h3>TV / Display Repair</h3>
-            <p>Display & circuit board repair service.</p>
-          </div>
-          <div class="slide-card">
-            <h3>Smartwatch Repair</h3>
-            <p>Battery, strap, and screen replacements.</p>
-          </div>
-          <div class="slide-card">
-            <h3>Camera Repair</h3>
-            <p>Lens and sensor servicing.</p>
-          </div>
-          <div class="slide-card">
-            <h3>Console Repair</h3>
-            <p>Fix your PlayStation, Xbox, and more.</p>
-          </div>
+  </section>
+
+  <!-- Slider Section -->
+  <section id="slider">
+    <h2>Our Popular Services</h2>
+    <div class="slider">
+      <div class="slider-track">
+        <div class="slide-card">
+          <h3>Smartphone Repair</h3>
+          <p>Fast screen and battery replacements.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- Available Services Section -->
-    <section id="available-services">
-      <h2>Available Services</h2>
-      <div class="service-grid">
-        <div class="service-card" th:each="s : ${services}">
-          <h3 th:text="${s.serviceName}">Service Name</h3>
-          <p th:text="${s.description}">Description</p>
-          <p class="price" th:text="'Price: ₹' + ${s.basePrice}">₹1000</p>
-          <a class="btn" th:href="@{/customer/book/{id}(id=${s.id})}">Book Now</a>
+        <div class="slide-card">
+          <h3>Laptop Repair</h3>
+          <p>Software & hardware fixes by experts.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- My Bookings Section -->
-    <section id="my-bookings">
-      <h2>My Bookings</h2>
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Service</th>
-          <th>Device</th>
-          <th>Issue</th>
-          <th>Status</th>
-          <th>Technician</th>
-        </tr>
-        <tr th:each="b : ${bookings}">
-          <td th:text="${b.id}"></td>
-          <td th:text="${b.serviceCategory.serviceName}"></td>
-          <td th:text="${b.deviceDetails}"></td>
-          <td th:text="${b.issueDescription}"></td>
-          <td th:text="${b.status}"></td>
-          <td th:text="${b.technician != null ? b.technician.name : 'Not Assigned'}"></td>
-        </tr>
-      </table>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-container">
-      <div class="footer-logo">
-        <img src="/images/logo.png" alt="TechSwift Logo">
-        <h3>TechSwift</h3>
-        <p>Your trusted electronic repair partner.</p>
-      </div>
-
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a th:href="@{/customer/book-service}">Book Service</a></li>
-          <li><a href="#">Track</a></li>
-          <li><a th:href="@{/login}">Login</a></li>
-          <li><a th:href="@{/feedback}">Feedback</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-contact">
-        <h4>Contact Us</h4>
-        <p>Email: support@techswift.com</p>
-        <p>Phone: +91 98765 43210</p>
-        <p>Address: VIT Vellore, Tamil Nadu, India</p>
-      </div>
-
-      <div class="footer-social">
-        <h4>Follow Us</h4>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-x-twitter"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <div class="slide-card">
+          <h3>TV / Display Repair</h3>
+          <p>Display & circuit board repair service.</p>
+        </div>
+        <div class="slide-card">
+          <h3>Smartwatch Repair</h3>
+          <p>Battery, strap, and screen replacements.</p>
+        </div>
+        <div class="slide-card">
+          <h3>Camera Repair</h3>
+          <p>Lens and sensor servicing.</p>
+        </div>
+        <div class="slide-card">
+          <h3>Console Repair</h3>
+          <p>Fix your PlayStation, Xbox, and more.</p>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="footer-bottom">
-      <p>&copy; 2025 TechSwift. All Rights Reserved.</p>
+  <!-- Available Services Section -->
+  <section id="available-services">
+    <h2>Available Services</h2>
+    <div class="service-grid">
+      <div class="service-card" th:each="s : ${services}">
+        <h3 th:text="${s.serviceName}">Service Name</h3>
+        <p th:text="${s.description}">Description</p>
+        <p class="price" th:text="'Price: ₹' + ${s.basePrice}">₹1000</p>
+        <a class="btn" th:href="@{/customer/book/{id}(id=${s.id})}">Book Now</a>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <!-- My Bookings Section -->
+  <section id="my-bookings">
+    <h2>My Bookings</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Service</th>
+        <th>Device</th>
+        <th>Issue</th>
+        <th>Status</th>
+        <th>Technician</th>
+      </tr>
+      <tr th:each="b : ${bookings}">
+        <td th:text="${b.id}"></td>
+        <td th:text="${b.serviceCategory.serviceName}"></td>
+        <td th:text="${b.deviceDetails}"></td>
+        <td th:text="${b.issueDescription}"></td>
+        <td th:text="${b.status}"></td>
+        <td th:text="${b.technician != null ? b.technician.name : 'Not Assigned'}"></td>
+      </tr>
+    </table>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img src="/images/logo.png" alt="TechSwift Logo">
+      <h3>TechSwift</h3>
+      <p>Your trusted electronic repair partner.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a th:href="@{/customer/book-service}">Book Service</a></li>
+        <li><a href="#">Track</a></li>
+        <li><a th:href="@{/login}">Login</a></li>
+        <li><a th:href="@{/feedback}">Feedback</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <p>Email: support@techswift.com</p>
+      <p>Phone: +91 98765 43210</p>
+      <p>Address: VIT Vellore, Tamil Nadu, India</p>
+    </div>
+
+    <div class="footer-social">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 TechSwift. All Rights Reserved.</p>
+  </div>
+</footer>
 
 </body>
 </html>

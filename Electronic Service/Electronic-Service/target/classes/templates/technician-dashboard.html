@@ -1,26 +1,301 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Technician Dashboard</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>TechSwift | Technician Dashboard</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background-color: #0d3055;
+      color: white;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #00172f;
+      padding: 25px 50px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    header h2 {
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+
+    header a {
+      color: #ffc300;
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid #ffc300;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    header a:hover {
+      background-color: #ffc300;
+      color: #001d3d;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #000814 0%, #001d3d 100%);
+      color: white;
+      text-align: center;
+      padding: 70px 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #ffd60a;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #f0f0f0;
+      margin-bottom: 25px;
+    }
+
+    /* Assigned Bookings Section */
+    section {
+      padding: 40px 60px;
+      text-align: center;
+    }
+
+    section h2 {
+      color: #ffd60a;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #004688;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid #002b5c;
+      color: white;
+    }
+
+    th {
+      background-color: #001d3d;
+      color: #ffd60a;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    tr:hover {
+      background-color: #002b5c;
+    }
+
+    select, button {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    select {
+      background-color: #003566;
+      color: white;
+    }
+
+    select:focus {
+      outline: 2px solid #ffc300;
+    }
+
+    button {
+      background-color: #ffc300;
+      color: #001d3d;
+      margin-left: 5px;
+    }
+
+    button:hover {
+      background-color: #ffd60a;
+      color: #000814;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #001d3d;
+      color: white;
+      padding: 60px 20px 30px;
+      text-align: left;
+      border-top: 2px solid #ffc300;
+      margin-top: 60px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo h3 {
+      color: #ffd60a;
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      margin-bottom: 15px;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: #ffc300;
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 1.3rem;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #ffc300;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      border-top: 1px solid #003566;
+      padding-top: 20px;
+    }
+
+  </style>
+</head>
+
 <body>
-<h2>Technician Dashboard</h2>
-<table border="1">
-  <tr><th>ID</th><th>Customer</th><th>Device</th><th>Issue</th><th>Status</th><th>Update</th></tr>
-  <tr th:each="b : ${assignedBookings}">
-    <td th:text="${b.id}"></td>
-    <td th:text="${b.customer.name}"></td>
-    <td th:text="${b.deviceDetails}"></td>
-    <td th:text="${b.issueDescription}"></td>
-    <td th:text="${b.status}"></td>
-    <td>
-      <form th:action="@{/technician/update-status/{id}(id=${b.id})}" method="post">
-        <select name="status">
-          <option>In Progress</option>
-          <option>Completed</option>
-        </select>
-        <button type="submit">Update</button>
-      </form>
-    </td>
-  </tr>
-</table>
+
+<header>
+  <h2>TechSwift - Technician Dashboard</h2>
+  <a th:href="@{/logout}">Logout</a>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Welcome Technician</h1>
+    <p>Manage your assigned service bookings and update their status easily.</p>
+  </section>
+
+  <section>
+    <h2>Assigned Bookings</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Device</th>
+        <th>Issue</th>
+        <th>Status</th>
+        <th>Update</th>
+      </tr>
+      <tr th:each="b : ${assignedBookings}">
+        <td th:text="${b.id}"></td>
+        <td th:text="${b.customer.name}"></td>
+        <td th:text="${b.deviceDetails}"></td>
+        <td th:text="${b.issueDescription}"></td>
+        <td th:text="${b.status}"></td>
+        <td>
+          <form th:action="@{/technician/update-status/{id}(id=${b.id})}" method="post">
+            <select name="status">
+              <option>In Progress</option>
+              <option>Completed</option>
+            </select>
+            <button type="submit">Update</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img src="/images/logo.png" alt="TechSwift Logo">
+      <h3>TechSwift</h3>
+      <p>Your trusted electronic repair partner.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a th:href="@{/technician/dashboard}">Dashboard</a></li>
+        <li><a th:href="@{/login}">Login</a></li>
+        <li><a th:href="@{/feedback}">Feedback</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact Us</h4>
+      <p>Email: support@techswift.com</p>
+      <p>Phone: +91 98765 43210</p>
+      <p>Address: VIT Vellore, Tamil Nadu, India</p>
+    </div>
+
+    <div class="footer-social">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 TechSwift. All Rights Reserved.</p>
+  </div>
+</footer>
+
 </body>
 </html>
